@@ -1,19 +1,7 @@
 from model_ import get_ready_model
-
 import pandas as pd
 import numpy as np
 import tensorflow as tf
-import random
-import os
-from queue import Queue
-from tensorflow.keras.preprocessing.image import load_img, img_to_array
-from tensorflow.keras.layers import Conv2D
-from tensorflow.keras.applications import MobileNetV2
-from tensorflow.keras import Model
-from tensorflow.data import Dataset
-from IPython.display import display
-import PIL
-import matplotlib.image as mpimg
 from matplotlib import pyplot as plt
 from matplotlib.patches import Rectangle
 
@@ -28,7 +16,22 @@ test_dataset_path = r'data/testing_images'
 
 train_boxes_df = pd.read_csv(r'data/train_solution_bounding_boxes.csv')
 
-def read_image()
+
+def scale_bounding_boxes(coordinates: pd.DataFrame, nominal_shape: tuple, output_shape: tuple):
+    """
+    :param coordinates: with x1, y1, x2, y2 coordinates
+    :param nominal_shape: (h, w) image shape
+    :param output_shape: (h, w) image shape
+    :return: array
+    """
+    h, w = nominal_shape
+    new_h, new_w = output_shape
+
+    coordinates.iloc[:, 0] = coordinates.iloc[:, 0] * (new_w/w)
+    coordinates.iloc[:, 1] = coordinates.iloc[:, 1] * (new_h/h)
+    coordinates.iloc[:, 2] = coordinates.iloc[:, 2] * (new_w/w)
+    coordinates.iloc[:, 3] = coordinates.iloc[:, 3] * (new_h/h)
+    return coordinates
 
 
 
